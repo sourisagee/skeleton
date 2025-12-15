@@ -40,7 +40,26 @@ class UserService {
     }
   }
 
-  static async deleteUser(id) {
+  static async updateUserById(id, { username, email }) {
+    try {
+      const userToUpdate = await User.findByPk(id);
+
+      if (!userToUpdate) return null;
+
+      if (username) userToUpdate.username = username.trim();
+      if (email) userToUpdate.email = email.trim().toLowerCase();
+
+      await userToUpdate.save();
+
+      const updatedUser = userToUpdate.get();
+      delete updatedUser.password;
+      return updatedUser;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async deleteUserById(id) {
     try {
       return await User.destroy({ where: { id } });
     } catch (error) {

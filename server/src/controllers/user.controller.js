@@ -32,7 +32,8 @@ class UserController {
     try {
       const { refreshToken } = req.cookies;
       const { user } = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN);
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = generateJwtTokens({ user });
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+        generateJwtTokens({ user });
 
       return res
         .status(200)
@@ -161,6 +162,91 @@ class UserController {
     try {
       return res.clearCookie('refreshToken').json(formatResponse(200, 'Успешный выход'));
     } catch ({ message }) {
+      return res
+        .status(500)
+        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, message));
+    }
+  }
+
+  static async updateUserById(req, res) {
+    try {
+      const { id } = req.params;
+      const { username, email } = req.body;
+
+      if (!username && !email) {
+        return res
+          .status(400)
+          .json(
+            formatResponse(
+              400,
+              'Нужно хотя бы одно поле для обновления (имя или почта)',
+              null,
+              'Нет полей для обновления',
+            ),
+          );
+      }
+
+      if (email && !User.validateEmail(email)) {
+        return res
+          .status(400)
+          .json(
+            formatResponse(400, 'Некорректный формат почты', null, 'Некорректная почта'),
+          );
+      }
+
+      if (email) {
+        const existingUser = await UserService.getUserByEmail(email.toLowerCase());
+
+        if (existingUser && typeof existingUser === 'object' && existingUser.id !== id)
+          return res
+            .status(400)
+            .json(
+              formatResponse(
+                400,
+                'Эта почта уже используется',
+                null,
+                'Эта почта уже существует',
+              ),
+            );
+      }
+
+      const updatedUser = await UserService.updateUserById(id, { username, email });
+
+      if (!updatedUser) {
+        return res.status(404).json(formatResponse(404, 'Пользователь не найден'));
+      }
+
+      const { accessToken, refreshToken } = generateJwtTokens({ user: updatedUser });
+
+      return res
+        .status(200)
+        .cookie('refreshToken', refreshToken, cookieConfig)
+        .json(
+          formatResponse(200, 'Пользователь успешно обновлен', {
+            user: updatedUser,
+            accessToken,
+          }),
+        );
+    } catch (error) {
+      return res
+        .status(500)
+        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, message));
+    }
+  }
+
+  static async deleteUserById(req, res) {
+    try {
+      const { id } = req.params;
+      const userToDelete = await UserService.deleteUserById(id);
+
+      if (!userToDelete) {
+        return res
+          .status(404)
+          .json(formatResponse(404, 'Пользователь для удаления не найден'));
+      } else {
+        return res.json(formatResponse(200, 'User', userToDelete));
+      }
+    } catch (error) {
       return res
         .status(500)
         .json(formatResponse(500, 'Внутренняя ошибка сервера', null, message));
