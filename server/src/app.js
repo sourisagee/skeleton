@@ -7,6 +7,8 @@ const PORT = 3000 ?? process.env.PORT;
 
 serverConfig(app);
 
+app.use('/', mainRouter);
+
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
