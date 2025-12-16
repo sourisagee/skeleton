@@ -7,7 +7,7 @@ userRouter
 userRouter
   .route('/:id')
   .get(UserController.getUserById)
-  .post(UserController.updateUserById) //
-  .delete(UserController.deleteUserById) // 
+  .post(UserController.updateUserById) 
+  .delete(UserController.deleteUserById) 
 
 module.exports = userRouter;
