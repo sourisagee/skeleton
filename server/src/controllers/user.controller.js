@@ -17,10 +17,10 @@ class UserController {
   }
 
   static async getUserById(req, res) {
-    const { id } = req.params;
+    const { userId } = req.params;
 
     try {
-      const user = await UserService.getUserById(id);
+      const user = await UserService.getUserById(userId);
 
       return res.status(200).json(formatResponse(200, 'Пользователь', user));
     } catch (error) {
@@ -170,7 +170,7 @@ class UserController {
 
   static async updateUserById(req, res) {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const { username, email } = req.body;
 
       if (!username && !email) {
@@ -197,7 +197,7 @@ class UserController {
       if (email) {
         const existingUser = await UserService.getUserByEmail(email.toLowerCase());
 
-        if (existingUser && typeof existingUser === 'object' && existingUser.id !== id)
+        if (existingUser && typeof existingUser === 'object' && existingUser.id !== userId)
           return res
             .status(400)
             .json(
@@ -210,7 +210,7 @@ class UserController {
             );
       }
 
-      const updatedUser = await UserService.updateUserById(id, { username, email });
+      const updatedUser = await UserService.updateUserById(userId, { username, email });
 
       if (!updatedUser) {
         return res.status(404).json(formatResponse(404, 'Пользователь не найден'));
@@ -236,8 +236,8 @@ class UserController {
 
   static async deleteUserById(req, res) {
     try {
-      const { id } = req.params;
-      const userToDelete = await UserService.deleteUserById(id);
+      const { userId } = req.params;
+      const userToDelete = await UserService.deleteUserById(userId);
 
       if (!userToDelete) {
         return res

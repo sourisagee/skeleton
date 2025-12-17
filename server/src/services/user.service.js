@@ -22,9 +22,9 @@ class UserService {
     }
   }
 
-  static async getUserById(id) {
+  static async getUserById(userId) {
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(userId);
       return user.get();
     } catch (error) {
       console.log(error);
@@ -40,9 +40,9 @@ class UserService {
     }
   }
 
-  static async updateUserById(id, { username, email }) {
+  static async updateUserById(userId, { username, email }) {
     try {
-      const userToUpdate = await User.findByPk(id);
+      const userToUpdate = await User.findByPk(userId);
 
       if (!userToUpdate) return null;
 
@@ -59,9 +59,9 @@ class UserService {
     }
   }
 
-  static async deleteUserById(id) {
+  static async deleteUserById(userId) {
     try {
-      return await User.destroy({ where: { id } });
+      return await User.destroy({ where: { id: userId } });
     } catch (error) {
       console.log(error);
     }
