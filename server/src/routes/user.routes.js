@@ -5,9 +5,9 @@ userRouter
   .get('/', UserController.getAllUsers)
 
 userRouter
-  .route('/:id')
+  .route('/:userId')
   .get(UserController.getUserById)
-  .post(UserController.updateUserById) 
+  .put(UserController.updateUserById) 
   .delete(UserController.deleteUserById) 
 
 module.exports = userRouter;
