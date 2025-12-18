@@ -7,7 +7,7 @@ class TaskService {
         include: [
           {
             model: User,
-            attributes: [id, username, email],
+            attributes: ['id', 'username', 'email'],
           },
         ],
       });
@@ -25,13 +25,13 @@ class TaskService {
       const userTasks = await Task.findAll({
         where: {
           user_id: userId,
-          include: [
-            {
-              model: User,
-              attributes: [id, username, email],
-            },
-          ],
         },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'username', 'email'],
+          },
+        ],
       });
 
       if (!userTasks) return null;
@@ -48,7 +48,7 @@ class TaskService {
         include: [
           {
             model: User,
-            attributes: [id, username, email],
+            attributes: ['id', 'username', 'email'],
           },
         ],
       });
@@ -88,7 +88,7 @@ class TaskService {
 
   static async deleteTask(taskId) {
     try {
-      return await Task.destroy({ where: { taskId } });
+      return await Task.destroy({ where: { id: taskId } });
     } catch (error) {
       throw new Error(error.message);
     }
