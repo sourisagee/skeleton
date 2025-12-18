@@ -48,7 +48,7 @@ export default function App() {
           <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
           <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
           <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />
-          <Route path="/account" element={<UserAccountPage user={user} />} />
+          <Route path="/account/:userId" element={<UserAccountPage user={user} />} />
           <Route
             path="/allTasks"
             element={

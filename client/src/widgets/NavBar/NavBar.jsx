@@ -60,7 +60,9 @@ export default function NavBar({ handleSignOut, user }) {
           <Nav>
             <Nav.Link onClick={() => navigate('/allTasks')}>Все задачи</Nav.Link>
             <Nav.Link onClick={() => navigate('/userTasks')}>Мои задачи</Nav.Link>
-            <Nav.Link onClick={() => navigate('/account')}>Мой профиль</Nav.Link>
+            <Nav.Link onClick={() => navigate(`/account/${user.id}`)}>
+              Мой профиль
+            </Nav.Link>
             {/* <Nav.Link onClick={() => navigate('/meetup/:meetupId')}>
               Создать митап
             </Nav.Link> */}
