@@ -148,19 +148,21 @@ export default function UserTasksPage({ user }) {
                       <h5>Задача №{task.id}</h5>
                     </Card.Title>
                     <Card.Text>
-                      {/* <strong>Название: </strong> <br />
-                      {meetup.description.length > 50
-                        ? `${meetup.description.substring(0, 50)}...`
-                        : meetup.description}
-                      <br /> */}
                       <strong>Название:</strong> {task.title} <br />
-                      {/* <strong>Участники:</strong> {meetup.registeredCount}/
-                      {meetup.maxParticipants} */}
-                      {/* <br /> */}
                     </Card.Text>
                   </Card.Body>
-                  <div className="d-flex justify-content-center mt-3 mb-3"></div>
-                  <div className="d-flex justify-content-center mt-3 mb-3"></div>
+
+                  <div className="d-flex justify-content-center mt-3 mb-3">
+                    <Button
+                      onClick={() => {
+                        navigate(`/task/${task.id}`);
+                      }}
+                      variant={'primary'}
+                      size="sm"
+                    >
+                      Подробнее...
+                    </Button>
+                  </div>
                 </Card>
               </Col>
             );
