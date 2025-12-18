@@ -58,7 +58,7 @@ export default function App() {
           <Route path="/userTasks" element={<UserTasksPage user={user} />} />
           <Route
             path="/task/:taskId"
-            element={<OneTaskPage user={user} allTasks={allTasks} />}
+            element={<OneTaskPage user={user} />}
           />
         </Routes>
       </BrowserRouter>
