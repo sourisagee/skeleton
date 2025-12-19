@@ -16,6 +16,7 @@ module.exports = {
           username: 'emily',
           email: 'emily@example.com',
           password: user1Password,
+          role: 'admin',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -23,7 +24,7 @@ module.exports = {
           username: 'john',
           email: 'john@example.com',
           password: user2Password,
-
+          role: 'user',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -31,7 +32,7 @@ module.exports = {
           username: 'jane',
           email: 'jane@example.com',
           password: user3Password,
-
+          role: 'user',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
