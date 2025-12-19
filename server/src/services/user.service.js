@@ -33,7 +33,7 @@ class UserService {
 
   static async createUser({ username, email, password }) {
     try {
-      const user = await User.create({ username, email, password, role: 'author' });
+      const user = await User.create({ username, email, password, role: 'user' });
       return user;
     } catch (error) {
       console.log(error);
