@@ -230,7 +230,7 @@ class UserController {
     } catch (error) {
       return res
         .status(500)
-        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, message));
+        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, error.message));
     }
   }
 
@@ -249,7 +249,7 @@ class UserController {
     } catch (error) {
       return res
         .status(500)
-        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, message));
+        .json(formatResponse(500, 'Внутренняя ошибка сервера', null, error.message));
     }
   }
 }
