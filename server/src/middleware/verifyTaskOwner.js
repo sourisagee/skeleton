@@ -12,7 +12,7 @@ async function verifyTaskOwner(req, res, next) {
             return res.status(404).json(formatResponse(404, 'Task not found'));
         }
 
-        if (task.user_id !== userId) {
+        if (task.user_id !== userId && res.locals.user.role !== 'admin') {
             return res.status(403).json(
                 formatResponse(
                     403, 

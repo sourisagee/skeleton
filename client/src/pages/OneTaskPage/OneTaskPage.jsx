@@ -51,6 +51,8 @@ export default function OneTaskPage({ user }) {
   if (!currentTask) return <div>Поиск задачи...</div>;
 
   const isOwner = user && currentTask.user_id === user.id;
+  const isAdmin = user && user.role === 'admin';
+  const canModify = isOwner || isAdmin;
 
   return (
     <>
@@ -85,7 +87,7 @@ export default function OneTaskPage({ user }) {
                 )}
               </Card.Body>
 
-              {isOwner && (
+              {canModify && (
                 <Card.Footer className="d-flex justify-content-center">
                   {editMode ? (
                     <>
@@ -130,7 +132,7 @@ export default function OneTaskPage({ user }) {
           </Col>
         </Row>
 
-        {isOwner && (
+        {canModify && (
           <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
             <Modal.Header closeButton>
               <Modal.Title>Подтверждение удаления</Modal.Title>
