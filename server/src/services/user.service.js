@@ -61,7 +61,15 @@ class UserService {
 
   static async deleteUserById(userId) {
     try {
-      return await User.destroy({ where: { id: userId } });
+      const user = await User.findByPk(userId);
+      if (!user) return null;
+
+      const userData = user.get();
+
+      await user.destroy();
+
+      delete userData.password;
+      return userData;
     } catch (error) {
       console.log(error);
     }
