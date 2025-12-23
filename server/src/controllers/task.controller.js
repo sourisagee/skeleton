@@ -44,10 +44,15 @@ class TaskController {
 
   static async createTask(req, res) {
     try {
-      const { title, status, user_id } = req.body;
+      const { title, status } = req.body;
+      const user_id = res.locals.user.id;
+
+      if (!user_id) {
+        return res.status(400).json(formatResponse(400, 'User ID is required'));
+      }
 
       if (!title || typeof title !== 'string' || title.trim().length === 0) {
-        return res.status(400).json(formatResponse(400, 'User ID is required'));
+        return res.status(400).json(formatResponse(400, 'Title is invalid'));
       }
 
       const newTask = await TaskService.createTask({ title, status, user_id });
