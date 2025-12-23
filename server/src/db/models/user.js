@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Task, {
         foreignKey: 'user_id',
-      })
+      });
     }
 
     static validateEmail(email) {
@@ -101,6 +101,7 @@ module.exports = (sequelize, DataTypes) => {
       username: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      role: DataTypes.ENUM('admin', 'user'),
     },
     {
       sequelize,
